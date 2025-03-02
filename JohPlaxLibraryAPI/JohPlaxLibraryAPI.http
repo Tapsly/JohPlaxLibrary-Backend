@@ -1,0 +1,6 @@
+@JohPlaxLibraryAPI_HostAddress = http://localhost:5242
+
+GET {{JohPlaxLibraryAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
