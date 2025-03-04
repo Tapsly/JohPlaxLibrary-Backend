@@ -24,7 +24,49 @@ namespace JohPlaxLibraryAPI.Controllers
         {
             var existingBook = await _booksService.GetBookByIdAsync(id);
 
-            return existingBook is null ? NotFound() : Ok(existingBook);
+            return existingBook is null ? NotFound($"Book with the id {id} could not be found") : Ok(existingBook);
+        }
+
+        [HtttpGet("Genre/{genre}")]
+        public async Task<IActionResult<IEnumerable<Book>>> GetBooksByGenreAsync(string genre)
+        {
+            try
+            {
+                return Ok(await _booksService.GetBooksByGenreAsync(genre));
+            }
+            catch (global::System.Exception e)
+            {
+
+                throw e;
+            }
+        }
+
+        [HtttpGet("Author/{author}")]
+        public async Task<IActionResult<IEnumerable<Book>>> GetBooksByGenreAsync(string author)
+        {
+            try
+            {
+                return Ok(await _booksService.GetBooksByAuthorAsync());
+            }
+            catch (global::System.Exception e)
+            {
+
+                throw e;
+            }
+        }
+
+        [HtttpGet("Author/{author}/Genre/{genre}")]
+        public async Task<IActionResult<IEnumerable<Book>>> GetBooksByGenreAsync(string author, string genre)
+        {
+            try
+            {
+                return Ok(await _booksService.GetBooksByAuthorAndGenreAsync(author, genre));
+            }
+            catch (global::System.Exception e)
+            {
+
+                throw e;
+            }
         }
 
         [HttpPost]
@@ -43,7 +85,7 @@ namespace JohPlaxLibraryAPI.Controllers
 
             if(queryBook is null)
             {
-                return NotFound();
+                return NotFound($"Book with the id {id} could not be found");
             }
 
             await _booksService.UpdateBookByIdAsync(id, updatedBook);
@@ -58,10 +100,52 @@ namespace JohPlaxLibraryAPI.Controllers
 
             if(existingBook is null)
             {
-                return NotFound();
+                return NotFound($"Book with the id {id} could not be found");
             }
 
             await _booksService.DeleteBookByIdAsync(id);
+            return NoContent();
+        }
+
+        [HttpDelete("Genre/{genre}")]
+        public async Task<ActionResult> DeleteBookByGenreAsync(string genre)
+        {
+            var existingBooks = await _booksService.GetBooksByGenreAsync(genre);
+
+            if (!existingBooks.Any())
+            {
+                return NotFound($"Books of this genre: {genre} could not be found");
+            }
+
+            await _booksService.DeleteBooksByGenreAsync(genre);
+            return NoContent();
+        }
+
+        [HttpDelete("Author/{author}")]
+        public async Task<ActionResult> DeleteBookByGenreAsync(string author)
+        {
+            var existingBooks = await _booksService.GetBooksByAuthorAsync(author);
+
+            if (!existingBooks.Any())
+            {
+                return NotFound($"Books of this author: {author} could not be found");
+            }
+
+            await _booksService.DeleteBooksByAuthorAsync(author);
+            return NoContent();
+        }
+
+        [HttpDelete("Author/{author}/Genre/{genre}")]
+        public async Task<ActionResult> DeleteBookByAuthorAndGenreAsync(string author,string genre)
+        {
+            var existingBooks = await _booksService.GetBooksByAuthorAndGenreAsync(author, genre);
+
+            if (!existingBooks.Any())
+            {
+                return NotFound($"Books of this author: {author} and genre: {genre} could not be found");
+            }
+
+            await _booksService.DeleteBooksByAuthorAndGenreAsync(author, genre);
             return NoContent();
         }
     }

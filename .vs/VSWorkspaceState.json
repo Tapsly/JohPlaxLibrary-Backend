@@ -3,6 +3,7 @@
     "",
     "\\JohPlaxLibraryAPI",
     "\\JohPlaxLibraryAPI\\bin",
+    "\\JohPlaxLibraryAPI\\bin\\Debug\\net8.0",
     "\\JohPlaxLibraryAPI\\Context",
     "\\JohPlaxLibraryAPI\\Controllers",
     "\\JohPlaxLibraryAPI\\DTO",
@@ -10,6 +11,5 @@
     "\\JohPlaxLibraryAPI\\Models",
     "\\JohPlaxLibraryAPI\\Services"
   ],
-  "SelectedNode": "\\JohPlaxLibraryAPI\\Properties",
   "PreviewInSolutionExplorer": false
 }

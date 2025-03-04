@@ -50,10 +50,15 @@ namespace JohPlaxLibraryAPI.Services
             return await _booksCollection.Find(filter).ToListAsync();
         }
 
-
         public async Task<List<Book>> GetBooksByAuthorAsync(string author)
         {
             var filter = Builders<Book>.Filter.Eq(b => b.Author == author);
+            return await _booksCollection.Find(filter).ToListAsync();
+        }
+
+        public async Task<List<Book>> GetBooksByAuthorAndGenreAsync(string author, string genre)
+        {
+            var filter = Builders<Book>.Filter.Eq(b => b.Author == author && b.Genre == genre);
             return await _booksCollection.Find(filter).ToListAsync();
         }
 
@@ -90,6 +95,12 @@ namespace JohPlaxLibraryAPI.Services
         public async Task<DeleteResult> DeleteBooksByAuthorAsync(string author)
         {
             var filter = Builders<Book>.Filter.Eq(b => b.Author == author);
+            return await _booksCollection.DeleteManyAsync(filter);
+        }
+
+        public async Task<DeleteResult> DeleteBooksByAuthorAndGenreAsync(string author, string genre)
+        {
+            var filter = Builders<Book>.Filter.Eq(b => b.Author == author && b.Genre == genre);
             return await _booksCollection.DeleteManyAsync(filter);
         }
 

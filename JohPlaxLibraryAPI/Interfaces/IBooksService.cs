@@ -17,6 +17,8 @@ namespace JohPlaxLibraryAPI.Interfaces
 
         public Task<List<Book>> GetBooksByPriceAsync(decimal price);
 
+        public Task<List<Book>> GetBooksByAuthorAndGenre(string author, string genre);
+
         public Task<Book?> GetBookByIdAsync(string id);
 
         public Task<ReplaceOneResult> UpdateBookByIdAsync(string id, Book book);
@@ -26,6 +28,8 @@ namespace JohPlaxLibraryAPI.Interfaces
         public Task<DeleteResult> DeleteBooksByGenreAsync(string genre);
 
         public Task<DeleteResult> DeleteBooksByAuthorAsync(string author);
+
+        public Task<List<Book>> DelteBooksByAuthorAndGenre(string author, string genre);
 
         public Task<DeleteResult> DeleteBooksByDateAsync(DateTime date);
 
