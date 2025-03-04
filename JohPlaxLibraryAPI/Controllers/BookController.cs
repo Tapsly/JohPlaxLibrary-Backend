@@ -27,7 +27,7 @@ namespace JohPlaxLibraryAPI.Controllers
             return existingBook is null ? NotFound($"Book with the id {id} could not be found") : Ok(existingBook);
         }
 
-        [HtttpGet("Genre/{genre}")]
+        [HttpGet("Genre/{genre}")]
         public async Task<IActionResult<IEnumerable<Book>>> GetBooksByGenreAsync(string genre)
         {
             try
@@ -41,7 +41,7 @@ namespace JohPlaxLibraryAPI.Controllers
             }
         }
 
-        [HtttpGet("Author/{author}")]
+        [HttpGet("Author/{author}")]
         public async Task<IActionResult<IEnumerable<Book>>> GetBooksByGenreAsync(string author)
         {
             try
@@ -55,7 +55,7 @@ namespace JohPlaxLibraryAPI.Controllers
             }
         }
 
-        [HtttpGet("Author/{author}/Genre/{genre}")]
+        [HttpGet("Author/{author}/Genre/{genre}")]
         public async Task<IActionResult<IEnumerable<Book>>> GetBooksByGenreAsync(string author, string genre)
         {
             try
