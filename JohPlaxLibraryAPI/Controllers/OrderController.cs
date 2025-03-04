@@ -1,4 +1,8 @@
-﻿
+﻿/*
+ This file contains code that access the order service through constructor
+ It defines the http methods used to receive data from the client request,
+ process the request and generates responses that are sent back to the client. 
+ */
 using JohPlaxLibraryAPI.Interfaces;
 using JohPlaxLibraryAPI.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -17,19 +21,89 @@ namespace JohPlaxLibraryAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrdersAsync()
+        public async Task<IActionResult<IEnumerable<Order>>> GetOrdersAsync()
             => Ok(await _ordersService.GetOrdersAsync());
 
-        [HttpGet("{id:length(24)}")]
-        public async Task<ActionResult<Order>> GetOrderByIdAsync(string id)
+        [HttpGet("{bookId:length(24)}")]
+        public async Task<IActionResult<IEnumerable<Order>>> GetOrdersByBookIdAsync([FromRoute] string bookId)
         {
-            var existingOrder = await _ordersService.GetOrderByIdAsync(id);
+            try
+            {
+                Ok(await _ordersService.GetOrdersByBookIdAsync());
+            }
+            catch (Exception e)
+            {
 
-            return existingOrder is null ? NotFound() : Ok(existingOrder);
+                throw e;
+            }
+        }
+
+        [HttpGet("{userId:length(24)}")]
+        public async Task<IActionResult<IEnumerable<Order>>> GetOrdersByUserIdAsync([FromRoute] string userId)
+        {
+            try
+            {
+                Ok(await _ordersService.GetOrdersByUserIdAsync);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
+
+        [HttpGet("{id:length(24)}")]
+        public async Task<IActionResult<Order>> GetOrderByIdAsync([FromRoute] string id)
+        {
+            try
+            {
+                var existingOrder = await _ordersService.GetOrderByIdAsync();
+
+                return existingOrder is null ? NotFound() : Ok(existingOrder);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
+
+        [HttpGet("{userId:length(24)}")]
+        public async Task<IActionResult<Order>> GetOrderByUserIdAsync([FromRoute] string userId)
+        {
+            try
+            {
+                var existingOrder = await _ordersService.GetOrderByUserIdAsync();
+
+                return existingOrder is null ? NotFound() : Ok(existingOrder);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+         
+        }
+
+        [HttpGet("{bookId:length(24)}")]
+        public async Task<IActionResult<Order>> GetOrderByUserIdAsync([FromRoute] string bookId)
+        {
+            try
+            {
+                var existingOrder = await _ordersService.GetOrderByBookIdAsync();
+
+                return existingOrder is null ? NotFound() : Ok(existingOrder);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateOrderAsync(Order order)
+        public async Task<ActionResult> CreateOrderAsync([FromBody] Order order)
         {
             var createdOrder = await _ordersService.CreateOrderAsync(order);
 
@@ -38,32 +112,73 @@ namespace JohPlaxLibraryAPI.Controllers
         }
 
         [HttpPut("{id:length(24)}")]
-        public async Task<ActionResult> UpdateOrderByIdAsync(string id, Order updatedOrder)
+        public async Task<IActionResult> UpdateOrderByIdAsync([FromRoute]string id,[FromBody] Order updatedOrder)
         {
-            var queryOrder = await _ordersService.GetOrderByIdAsync(id);
-
-            if (queryOrder is null)
+            try
             {
-                return NotFound();
+                var queryOrder = await _ordersService.GetOrderByIdAsync(id);
+
+                if (queryOrder is null)
+                {
+                    return NotFound();
+                }
+
+                await _ordersService.UpdateOrderByIdAsync(id, updatedOrder);
+
+                return NoContent();
             }
+            catch (Exception e)
+            {
 
-            await _ordersService.UpdateOrderByIdAsync(id, updatedOrder);
-
-            return NoContent();
+                throw e;
+            }
+          
         }
 
         [HttpDelete("{id:length(24)}")]
-        public async Task<ActionResult> DeleteOrderByIdAsync(string id)
+        public async Task<IActionResult> DeleteOrderByIdAsync([FromRoute] string id)
         {
-            var existingOrder = await _ordersService.GetOrderByIdAsync(id);
-
-            if (existingOrder is null)
+            try
             {
-                return NotFound();
+                var existingOrder = await _ordersService.GetOrderByIdAsync(id);
+
+                if (existingOrder is null)
+                {
+                    return NotFound();
+                }
+
+                await _ordersService.DeleteOrderByIdAsync(id);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            
+        }
+
+        [HttpDelete("{bookId:length(24)}")]
+        public async Task<IActionResult> DeleteOrderByBookIdAsync([FromRoute] string bookId)
+        {
+            try
+            {
+                var existingOrder = await _ordersService.DeleteOrdersByBookIdAsync(bookId);
+
+                if (existingOrder is null)
+                {
+                    return NotFound();
+                }
+
+                await _ordersService.DeleteOrdersByBookIdAsync(bookId);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+
+                throw e;
             }
 
-            await _ordersService.DeleteOrderByIdAsync(id);
-            return NoContent();
         }
     }
 }

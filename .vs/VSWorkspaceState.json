@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\JohPlaxLibraryAPI",
+    "\\JohPlaxLibraryAPI\\bin",
+    "\\JohPlaxLibraryAPI\\Context",
+    "\\JohPlaxLibraryAPI\\Controllers",
+    "\\JohPlaxLibraryAPI\\DTO",
+    "\\JohPlaxLibraryAPI\\Interfaces",
+    "\\JohPlaxLibraryAPI\\Models",
+    "\\JohPlaxLibraryAPI\\Services"
+  ],
+  "SelectedNode": "\\JohPlaxLibraryAPI\\Properties",
+  "PreviewInSolutionExplorer": false
+}

@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 namespace JohPlaxLibraryAPI.Models
 {
@@ -7,17 +8,19 @@ namespace JohPlaxLibraryAPI.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public required string Id { get; set; }
-        [BsonId]
+        public string Id { get; set; } = null!;
+
+        [Required]
         [BsonRepresentation(BsonType.ObjectId)]
-        public required string OrderId { get; set; }
-        [BsonId]
+        public string UserId { get; set; } = null!;
+
         [BsonRepresentation(BsonType.ObjectId)]
-        public required string UserId { get; set; }
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public required string BookId { get; set; }
-        public DateTime OrderedDate { get; set; }
-        public DateTime ReturnDate { get; set; }
+        public string BookId { get; set; } = null!;
+
+        [Required]
+        public DateTime OrderedDate { get; set; } = null!;
+
+        [Required]
+        public DateTime ReturnDate { get; set; } = null!
     }
 }
