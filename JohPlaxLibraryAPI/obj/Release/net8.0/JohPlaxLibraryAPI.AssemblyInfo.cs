@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JohPlaxLibraryAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8fc790290b0f03f0a98ecc61ca70bd4d08f0e3b9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+348e00a2c43053b0030dda6b4367f0431a921fa7")]
 [assembly: System.Reflection.AssemblyProductAttribute("JohPlaxLibraryAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JohPlaxLibraryAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

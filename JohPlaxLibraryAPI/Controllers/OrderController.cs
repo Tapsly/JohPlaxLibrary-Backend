@@ -24,7 +24,7 @@ namespace JohPlaxLibraryAPI.Controllers
         public async Task<IActionResult<IEnumerable<Order>>> GetOrdersAsync()
             => Ok(await _ordersService.GetOrdersAsync());
 
-        [HttpGet("{bookId:length(24)}")]
+        [HttpGet("{bookId:guid:length(24):required}")]
         public async Task<IActionResult<IEnumerable<Order>>> GetOrdersByBookIdAsync([FromRoute] string bookId)
         {
             try
@@ -38,8 +38,8 @@ namespace JohPlaxLibraryAPI.Controllers
             }
         }
 
-        [HttpGet("{userId:length(24)}")]
-        public async Task<IActionResult<IEnumerable<Order>>> GetOrdersByUserIdAsync([FromRoute] string userId)
+        [HttpGet("{userId:guid:length(24):required}")]
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrdersByUserIdAsync([FromRoute] string userId)
         {
             try
             {
@@ -52,8 +52,8 @@ namespace JohPlaxLibraryAPI.Controllers
             }
         }
 
-        [HttpGet("{id:length(24)}")]
-        public async Task<IActionResult<Order>> GetOrderByIdAsync([FromRoute] string id)
+        [HttpGet("{id:guid:length(24):required}")]
+        public async Task<ActionResult<Order>> GetOrderByIdAsync([FromRoute] string id)
         {
             try
             {
@@ -68,8 +68,8 @@ namespace JohPlaxLibraryAPI.Controllers
             }
         }
 
-        [HttpGet("{userId:length(24)}")]
-        public async Task<IActionResult<Order>> GetOrderByUserIdAsync([FromRoute] string userId)
+        [HttpGet("{userId:guid:length(24):required}")]
+        public async Task<ActionResult<Order>> GetOrderByUserIdAsync([FromRoute] string userId)
         {
             try
             {
@@ -85,8 +85,8 @@ namespace JohPlaxLibraryAPI.Controllers
          
         }
 
-        [HttpGet("{bookId:length(24)}")]
-        public async Task<IActionResult<Order>> GetOrderByUserIdAsync([FromRoute] string bookId)
+        [HttpGet("{bookId:guid:length(24):required}")]
+        public async Task<ActionResult<Order>> GetOrderByUserIdAsync([FromRoute] string bookId)
         {
             try
             {
@@ -103,16 +103,25 @@ namespace JohPlaxLibraryAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateOrderAsync([FromBody] Order order)
+        public async Task<ActionResult<Order>> CreateOrderAsync([FromBody] Order order)
         {
-            var createdOrder = await _ordersService.CreateOrderAsync(order);
+            try
+            {
+                var createdOrder = await _ordersService.CreateOrderAsync(order);
 
-            return createdOrder is null ? throw new Exception("Failed to create Order") :
-                CreatedAtAction(nameof(GetOrderByIdAsync), new { id = createdOrder.Id }, createdOrder);
+                return createdOrder is null ? throw new Exception("Failed to create Order") :
+                    CreatedAtAction(nameof(GetOrderByIdAsync), new { id = createdOrder.Id }, createdOrder);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+           
         }
 
-        [HttpPut("{id:length(24)}")]
-        public async Task<IActionResult> UpdateOrderByIdAsync([FromRoute]string id,[FromBody] Order updatedOrder)
+        [HttpPut("{id:guid:length(24):required}")]
+        public async Task<ActionResult> UpdateOrderByIdAsync([FromRoute]string id,[FromBody] Order updatedOrder)
         {
             try
             {
@@ -135,8 +144,8 @@ namespace JohPlaxLibraryAPI.Controllers
           
         }
 
-        [HttpDelete("{id:length(24)}")]
-        public async Task<IActionResult> DeleteOrderByIdAsync([FromRoute] string id)
+        [HttpDelete("{id:guid:length(24):required}")]
+        public async Task<ActionResult> DeleteOrderByIdAsync([FromRoute] string id)
         {
             try
             {
@@ -158,8 +167,8 @@ namespace JohPlaxLibraryAPI.Controllers
             
         }
 
-        [HttpDelete("{bookId:length(24)}")]
-        public async Task<IActionResult> DeleteOrderByBookIdAsync([FromRoute] string bookId)
+        [HttpDelete("{bookId:guid:length(24):required}")]
+        public async Task<ActionResult> DeleteOrderByBookIdAsync([FromRoute] string bookId)
         {
             try
             {
